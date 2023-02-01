@@ -4,79 +4,61 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-   
-    public Animator animator;
-    public float speed;
-    public float jump;
     private Rigidbody2D rb2d;
-    public float input;
+    public Animator animator;
+
+    public float jumpForce;
+    public Transform groundCheck;
+    public float groundCheckRadius;
+    public LayerMask whatIsGround;
+
+    private bool isGrounded;
+    [SerializeField]
+    private float speed;
+
     private void Awake()
     {
-        Debug.Log("Player controller is awake");
         rb2d = gameObject.GetComponent<Rigidbody2D>();
-
     }
 
-    //private void OnCollision2D(Collision2D collision)
-    //{
-    //   Debug.Log("Collision: " + collision.gameObject.name);
-    //}
     private void Update()
     {
-        float vertical = Input.GetAxisRaw("Vertical");
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
         float horizontal = Input.GetAxisRaw("Horizontal");
-        MoveCharacter(horizontal,vertical);
-        PlayMovementAnimation(horizontal, vertical);
-        
+        float vertical = Input.GetAxis("Vertical");
 
-
-
+        MoveCharacter(horizontal, vertical);
+        MovementAnimation(horizontal, vertical);
+        Jump();
+        Crouch();
     }
-    private void MoveCharacter(float horizontal, float vertical)
+
+    void MoveCharacter(float horizontal, float vertical)
     {
         // move character horizontaly 
         Vector3 position = transform.position;
         //delata time 1/30 per sec
         position.x = position.x + horizontal * speed * Time.deltaTime;
         transform.position = position;
-        // move character horizontaly 
-
-        if (vertical > 0)
-        {
-            rb2d.AddForce(new Vector2(0f, jump), ForceMode2D.Force);
-
-        }
-        if (input > 0)
-        {
-            position.x = position.x + horizontal * speed * Time.deltaTime;
-            transform.position = position;
-        }
-
     }
 
-    private void PlayMovementAnimation(float horizontal, float vertical)
+    private void MovementAnimation(float horizontal, float vertical)
     {
         animator.SetFloat("horizontal", Mathf.Abs(horizontal));
 
+        // flip
         Vector3 scale = transform.localScale;
         if (horizontal < 0)
         {
-
             scale.x = -1f * Mathf.Abs(scale.x);
-
         }
         else if (horizontal > 0)
         {
-
             scale.x = Mathf.Abs(scale.x);
         }
-
         transform.localScale = scale;
-
-
-
-        //jump
-        if (vertical > 0)
+        //jump animaTION
+        if (vertical > 0 && isGrounded)
         {
             animator.SetBool("Jump", true);
         }
@@ -84,20 +66,28 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetBool("Jump", false);
         }
-
-
-        if (Input.GetKey(KeyCode.LeftControl))
+    }
+    //JUMP FUNCTION
+    void Jump()
+    {
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            isGrounded = false;
+            
+            rb2d.AddForce(Vector2.up * jumpForce, ForceMode2D.Force);
+        }
+    }
+    //crouch function 
+    void Crouch()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             animator.SetBool("Crouch", true);
+
         }
-        else
+        else if (Input.GetKeyUp(KeyCode.LeftControl))
         {
             animator.SetBool("Crouch", false);
         }
-        //walk
-       
-
     }
-   
-
 }

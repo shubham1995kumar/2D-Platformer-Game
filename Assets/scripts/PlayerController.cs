@@ -16,9 +16,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float speed;
 
+    private Vector3 respawnPoint;
+    public GameObject FallDetector;
+
     private void Awake()
     {
+
         rb2d = gameObject.GetComponent<Rigidbody2D>();
+        respawnPoint = transform.position;
     }
 
     private void Update()
@@ -29,8 +34,18 @@ public class PlayerController : MonoBehaviour
 
         MoveCharacter(horizontal, vertical);
         MovementAnimation(horizontal, vertical);
-        Jump();
+        Jump(vertical);
         Crouch();
+
+        FallDetector.transform.position = new Vector2(transform.position.x, FallDetector.transform.position.y);
+
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+       if(collision.tag == "FallDetector")
+        {
+            transform.position = respawnPoint;
+        }
     }
 
     void MoveCharacter(float horizontal, float vertical)
@@ -68,9 +83,9 @@ public class PlayerController : MonoBehaviour
         }
     }
     //JUMP FUNCTION
-    void Jump()
+    void Jump(float vertical)
     {
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown("Jump") && vertical > 0 && isGrounded)
         {
             isGrounded = false;
             

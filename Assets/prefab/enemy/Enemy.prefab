@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 7848621348421699782}
   - component: {fileID: 7848621348421699780}
   - component: {fileID: 7848621348421699783}
-  - component: {fileID: 635677427}
-  - component: {fileID: 635677426}
-  - component: {fileID: 635677423}
-  m_Layer: 0
+  - component: {fileID: 319236513}
+  - component: {fileID: 319236512}
+  - component: {fileID: 319236511}
+  m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,7 +114,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.4961777, y: 0.72436976}
   m_EdgeRadius: 0
---- !u!50 &635677427
+--- !u!50 &319236513
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -135,7 +135,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!95 &635677426
+--- !u!95 &319236512
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -155,7 +155,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
---- !u!114 &635677423
+--- !u!114 &319236511
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

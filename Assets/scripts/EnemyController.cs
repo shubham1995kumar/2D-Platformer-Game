@@ -48,11 +48,33 @@ public class EnemyController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
-        if (playerController != null)
+        if( playerController != null)
         {
-            playerController.KillPlayer();
-        }
-    }
+            HealthManager.health--;
+            if (HealthManager.health <= 0)
+            {
 
+
+                playerController.KillPlayer();
+            }
+            else
+            {
+                StartCoroutine(GetHurt());
+            }
+
+        } 
+            
+            
+        
+    }
+    IEnumerator GetHurt()
+    {
+        Physics2D.IgnoreLayerCollision(7, 8);
+        GetComponent<Animator>().SetLayerWeight(0, 1);
+        yield return new WaitForSeconds(3);
+        GetComponent<Animator>().SetLayerWeight(0, 0);
+        Physics2D.IgnoreLayerCollision(7,8, false);
+    }
+   
 
 }

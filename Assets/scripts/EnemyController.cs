@@ -53,7 +53,7 @@ public class EnemyController : MonoBehaviour
             HealthManager.health--;
             if (HealthManager.health <= 0)
             {
-
+                SoundManager.Instance.Play(SoundManager.Sounds.PlayerDeath);
 
                 playerController.KillPlayer();
             }

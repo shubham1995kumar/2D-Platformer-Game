@@ -1446,23 +1446,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbc6264fb1616804cab998ca13c0e836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundEffect: {fileID: 1948516059}
-  soundMusic: {fileID: 742654584}
+  sounds:
+  - soundType: 0
+    soundClip: {fileID: 8300000, guid: a4dc23583fb1dc84a89049f88b06efe8, type: 3}
+  - soundType: 2
+    soundClip: {fileID: 8300000, guid: 0651b56880a11ef45909b779443691aa, type: 3}
+  - soundType: 1
+    soundClip: {fileID: 8300000, guid: ccb3ad8b5906ef14d921491eb8be7e2d, type: 3}
+  - soundType: 3
+    soundClip: {fileID: 8300000, guid: 31b2284e8ab3f244182080ca7da474b7, type: 3}
+  - soundType: 6
+    soundClip: {fileID: 8300000, guid: 8d331b50969371c4db3319a915ef2cad, type: 3}
+  - soundType: 0
+    soundClip: {fileID: 0}
   IsMute: 0
   Volume: 1
-  SoundType:
-  - SoundType: 0
-    soundClip: {fileID: 8300000, guid: df6d1af64fdebb04d80a54b27b720509, type: 3}
-  - SoundType: 1
-    soundClip: {fileID: 8300000, guid: 13de3c8b19190eb488622c2982f7e977, type: 3}
-  - SoundType: 2
-    soundClip: {fileID: 8300000, guid: 0651b56880a11ef45909b779443691aa, type: 3}
-  - SoundType: 5
-    soundClip: {fileID: 8300000, guid: e5cb0976ee7cf93489107ede5175519b, type: 3}
-  - SoundType: 6
-    soundClip: {fileID: 8300000, guid: 8d331b50969371c4db3319a915ef2cad, type: 3}
-  - SoundType: 3
-    soundClip: {fileID: 8300000, guid: 31b2284e8ab3f244182080ca7da474b7, type: 3}
+  soundEffect: {fileID: 1948516059}
+  soundMusic: {fileID: 742654584}
 --- !u!4 &1059482518
 Transform:
   m_ObjectHideFlags: 0

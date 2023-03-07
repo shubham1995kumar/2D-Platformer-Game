@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     public void PickUpKey()
     {
         Debug.Log("Player has picked up the key ");
-        SoundManager.Instance.Play(SoundType.Key);
+        SoundManager.Instance.Play(SoundManager.Sounds.Pickup);
         ScoreController scoreController = new ScoreController();
         scoreController.IncreaseScore(10);
 
@@ -57,11 +57,12 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("player has died");
         //Destroy(gameObject);
         gameOverController.Playerdied();
+        SoundManager.Instance.Play(SoundManager.Sounds.PlayerMove);
         //gameOverController.ReloadLevel();
         this.enabled = false;
     }
 
-
+   
 
     private void Update()
     {
@@ -101,17 +102,15 @@ public class PlayerController : MonoBehaviour
         //delata time 1/30 per sec
         position.x = position.x + horizontal * speed * Time.deltaTime;
         transform.position = position;
-        FootStepSound();
-
-
-    }
-    public void FootStepSound()
-    {
-        SoundManager.Instance.Play(SoundType.Footstep);
+        SoundManager.Instance.Play(SoundManager.Sounds.PlayerMove);
     }
     public void JumpSound()
     {
-       SoundManager.Instance.Play(SoundType.Jump);
+        SoundManager.Instance.Play(SoundManager.Sounds.Jump);
+    }
+    public void MovementSound()
+    {
+        SoundManager.Instance.Play(SoundManager.Sounds.PlayerMove);
     }
 
     private void MovementAnimation(float horizontal, float vertical)
@@ -144,11 +143,6 @@ public class PlayerController : MonoBehaviour
         {
             animator.ResetTrigger("isGrounded");
         }
-
-
-
-
-
     }
 
     //JUMP FUNCTION

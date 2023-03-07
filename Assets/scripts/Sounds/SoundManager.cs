@@ -5,17 +5,17 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-
     private static SoundManager instance;
+
     public static SoundManager Instance { get { return instance; } }
+
+    public SoundType[] sounds;
+
+    public bool IsMute = false;
+    public float Volume = 1f;
 
     public AudioSource soundEffect;
     public AudioSource soundMusic;
-    public bool IsMute = false;
-    public float Volume = 1;
-
-    [SerializeField] 
-    public Sound[] SoundType;
 
     private void Awake()
     {
@@ -29,12 +29,24 @@ public class SoundManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     private void Start()
     {
-        SetVolume(0.5f);
-        PlayMusic(global::SoundType.music);
+        SetVolume(0.3f);
+        PlayMusic(SoundManager.Sounds.Music);
     }
-    public void PlayMusic(SoundType sound)
+
+    public void Mute(bool status)
+    {
+        IsMute = status;
+    }
+
+    public void SetVolume(float volume)
+    {
+        soundMusic.volume = volume;
+    }
+
+    public void PlayMusic(Sounds sound)
     {
         if (IsMute)
             return;
@@ -45,22 +57,9 @@ public class SoundManager : MonoBehaviour
             soundMusic.clip = clip;
             soundMusic.Play();
         }
-        else
-        {
-            Debug.LogError("error clip not found");
-        }
     }
-    public void Mute(bool status)
-    {
-        IsMute = status;
-    }
-    public void SetVolume(float volume)
-    {
-        Volume = volume;
-        soundEffect.volume = Volume;
-        soundMusic.volume = Volume;
-    }
-    public void Play(SoundType sound)
+
+    public void Play(Sounds sound)
     {
         if (IsMute)
             return;
@@ -70,39 +69,31 @@ public class SoundManager : MonoBehaviour
         {
             soundEffect.PlayOneShot(clip);
         }
-        else
-        {
-            Debug.LogError("error clip not found");
-        }
     }
 
-    private AudioClip getSoundClip(SoundType sound)
+    private AudioClip getSoundClip(Sounds sound)
     {
-        Sound item = Array.Find(SoundType, i => i.SoundType == sound);
-        if (item != null)
-        {
-            return item.soundClip;
-        }
-        return null;
+        SoundType returnSound = Array.Find(sounds, item => item.soundType == sound);
+        return returnSound.soundClip;
     }
-}
 
-[System.Serializable]
-public class Sound
-{
-    public SoundType SoundType;
-    public AudioClip soundClip;
-}
+    [Serializable]
+    public class SoundType
+    {
+        public Sounds soundType;
+        public AudioClip soundClip;
+    }
 
-public enum SoundType
-{
-    ButtonClick,
-    Footstep,
-    music,
-    PlayerDeath,
-    EnemyDeath,
-    Jump,
-   
-    Key,
-    FinishLevel,
+    public enum Sounds
+    {
+        ButtonClick,
+        PlayerMove,
+        Music,
+        PlayerDeath,
+        EnemyDeath,
+        Jump,
+        Pickup,
+        EnemyCollision,
+        LevelWin
+    }
 }
